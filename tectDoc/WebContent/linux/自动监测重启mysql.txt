@@ -1,0 +1,55 @@
+1 创建文件：
+/etc/listener/restart_mysql.sh
+/etc/listener/restart_mysql.log
+
+2 赋可执行的权限
+chmod +x restart_mysql.sh 
+
+3 给restart_mysql.sh文件编辑内容如下：
+#!/bin/bash
+pgrep mysqld &> /dev/null
+if [ $? -gt 0 ]
+then
+echo "`date` mysql is stop" >> /etc/listener/restart_mysql.log
+service mysql start
+else
+echo "`date` mysql running" >> /etc/listener/restart_mysql.log
+fi
+
+4 restart_mysql.sh强制为unix格式
+vi restart_mysql.sh
+:set ff=unix
+wq退出编辑
+
+这时 
+命令:pgrep mysqld可以查看mysql是否运行，
+命令:mysql:service mysql stop关掉服务
+命令:./restart_mysql.sh是可以运行的了
+
+====添加定时任务===========================================
+
+1 编辑corn调度表格
+crontab -e进入vi编辑，如果提示不存在就表示是新建的
+最后添加一行：*/5 * * * * /etc/mysql/restart_mysql.sh添加一个任务
+保存退出
+
+2 重启cron服务
+service cron restart
+
+3 如果报错：cron: unrecognized service
+安装crontab
+yum install vixie-cron
+yum install crontabs
+
+/sbin/service crond start //启动服务
+/sbin/service crond stop //关闭服务
+/sbin/service crond restart //重启服务
+/sbin/service crond reload //重新载入配置
+查看crontab服务状态：service crond status
+手动启动crontab服务：service crond start
+查看crontab服务是否已设置为开机启动，执行命令：ntsysv
+
+
+cron有两个配置文件
+一个是一个全局配置文件（/etc/crontab），是针对系统任务的；
+一组是crontab命令生成的配置文件（/var/spool/cron下的文件）

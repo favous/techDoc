@@ -1,0 +1,78 @@
+
+查看一下原系统是否有其他的JAVA版本号
+java -version
+
+到jdk安装文件目录下，运行命令安装jdk:
+rpm -i --badreloc --relocate /usr/java=/usr/jdk jdk-8u65-linux-x64.rpm
+
+
+配置环境变量
+使用vim /etc/profile编辑profile文件
+
+在/etc/profile底部加入如下内容
+export JAVA_HOME=/usr/jdk/jdk1.8.0_65
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+export PATH JAVA_HOME CLASSPATH
+
+source /etc/profile让profile文件立即生效。
+
+
+解压缩Tomcat
+创建目录# mkdir /usr/server/
+    # cd /usr/server
+    # tar -zxvf /usr/server/apache-tomcat-7.0.42.tar.gz
+
+tomcat下的conf的tomcat-users.xml文件后面添加用户配置
+<role rolename="manager-gui"/> 
+<role rolename="manager-script"/> 
+<role rolename="manager-jmx"/> 
+<role rolename="manager-status"/>  
+<role rolename="admin-gui"/>  
+<role rolename="admin-script"/> 
+<role rolename="manager"/>
+<user username="admin" password="root" roles="manager"/>
+<user username="admin" password="root" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/> 
+改tomcat的java版本
+
+中文路径：<Connector标签 URIEncoding="utf-8"，
+去端口号：<Connector标签 端口号改为80
+去项目名：<Context标签 改属性值path="/"
+
+
+
+安装mysql
+1，检查os类型与版本，本版本是sentos6.5。命令自己查。
+2，查找以前是否安装有mysql命令：
+	rpm -qa|grep -i mysql
+如果有会显示包名，例如：mysql-4.1.12-3.RHEL4.1
+删除命令：rpm -e --nodeps 包名
+3，下载mysql安装包，并解压后，上传到服务器，需要的解压后的安装包一般需要：
+	MySQL-client-5.6.28-1.linux_glibc2.5.x86_64.rpm
+	MySQL-devel-5.6.28-1.linux_glibc2.5.x86_64.rpm
+	MySQL-server-5.6.28-1.linux_glibc2.5.x86_64.rpm
+4，安装MySQL Server命令：rpm -ivh MySQL-server-5.6.28-1.linux_glibc2.5.x86_64.rpm
+安装完成后会生成root用户的随机密码，用“cat /root/.mysql_secret”可以查看。
+5，安装MySQL客户端：rpm -ivh MySQL-client-5.6.28-1.linux_glibc2.5.x86_64.rpm
+6，安装MySQL开发依赖包：rpm -ivh MySQL-devel-5.6.28-1.linux_glibc2.5.x86_64.rpm
+7，启动msyql：/etc/init.d/mysql start，重启：/etc/init.d/mysql restart
+8，登录root用户的MySQL：mysql -u root -p，如果提示密码，就输入安装时随机生成的密码。
+9，root用户登录数据库系统后
+	使用名为mysql的数据库的命令为：use mysql;
+	查看所有用户： select host,user,password from user;
+10，如果需要此用户能被外网访问，那么把此用户记录对应的host字段值改为：%，
+	sql例如：update user set host = '%' where host = 'localhost';
+
+
+
+忘记mysql密码：
+1，修改MySQL的配置文件（默认为/etc/my.cnf——在[mysqld]下添加一行skip-grant-tables	
+如果没有my.cnf文件，到/usr/share/mysql/下找到一个*.cnf文件，拷贝到/etc/并改名为my.cnf，命令如下：
+	 cp /usr/share/mysql/my-medium.cnf /etc/my.cnf
+2，保存my.cnf配置文件后，重启MySQL服务：/etc/init.d/mysql restart
+3，进入MySQL命令行 mysql -uroot -p,输入密码时直接回车，然后进入mysql数据库，改root用户密码，
+	sql为： UPDATE user SET PASSWORD = PASSWORD('Xfsy13705141082') WHERE USER = 'root';
+4，删除第一步中添加的那一行，然后重启mysql服务:/etc/init.d/mysql restart
+	
+
+

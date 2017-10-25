@@ -1,0 +1,158 @@
+﻿<html>
+<header>
+
+
+<style>
+ 	.panel_cell {border:2px solid #98A;}
+ 	.join_block {padding:0px; margin:0px; border-collapse:collapse; }
+ 	.fixed_table {table-layout:fixed; overflow:hidden; word-break: none;}
+ 	.centext_cell {padding:0px; margin:0px; border:1px solid #98A; overflow:hidden; height:30px;}
+ 	.relative_move {position: relative; top:-1px; left:-1px;}
+ </style>
+<script type="text/javascript">
+	function scrollWithGrid(id, idArrayH, idArrayV) {
+		var dataDiv = document.getElementById("dataDiv");
+		document.getElementById("titleDiv").scrollLeft = dataDiv.scrollLeft;
+		document.getElementById("checkboxDiv").scrollTop = dataDiv.scrollTop;
+		document.getElementById("rownomDiv").scrollTop = dataDiv.scrollTop;
+	}
+</script>
+
+</header>
+<body>
+
+<div>
+	<table class='join_block' style="table-layout:fixed; word-break:none; width:300px; font-size:13px; background-color:#F5F5F5;">
+		<tr>
+			<td class='join_block panel_cell'>
+				<table class='join_block'>
+					<tr>
+						<td class='join_block'>
+							<table class='fixed_table join_block relative_move' width='30'>
+								<tr>
+									<td class='centext_cell'></td>
+								</tr>
+							</table></td>
+						<td class='join_block'>
+							<table class='fixed_table join_block relative_move' width='30'>
+								<tr>
+									<td class='centext_cell'>页</td>
+								</tr>
+							</table>
+						</td>
+						<td class='join_block'>
+							<div id='titleDiv' style='width:240px; overflow:hidden;'>
+								<table class='fixed_table join_block relative_move' width='440'>
+									<tr>
+										<td class='centext_cell'>标题1</td>
+										<td class='centext_cell'>标题2</td>
+										<td class='centext_cell'>标题3</td>
+										<td width='37'></td><!-- 滚动条需要的额外位置 -->
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td class='join_block panel_cell'>
+				<table class='join_block'>
+					<tr>
+						<td class='join_block'>
+							<div id='checkboxDiv' style='height:150px; overflow:hidden;'>
+								<table class='fixed_table join_block relative_move' width='30'>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td class='centext_cell'><input type="checkbox" /></td></tr>
+									<tr><td height='30'></td></tr><!-- 滚动条需要的额外位置 -->
+								</table></div>
+						</td>
+						<td class='join_block'>
+							<div id='rownomDiv' style='height:150px; overflow:hidden;'>
+								<table class='fixed_table join_block relative_move' width='30'>
+									<tr><td class='centext_cell'>1</td></tr>
+									<tr><td class='centext_cell'>2</td></tr>
+									<tr><td class='centext_cell'>3</td></tr>
+									<tr><td class='centext_cell'>4</td></tr>
+									<tr><td class='centext_cell'>5</td></tr>
+									<tr><td class='centext_cell'>6</td></tr>
+									<tr><td class='centext_cell'>7</td></tr>
+									<tr><td class='centext_cell'>8</td></tr>
+									<tr><td height='30'></td></tr><!-- 滚动条需要的额外位置 -->
+								</table>
+							</div>
+						</td>
+						<td class='join_block'>
+							<div id='dataDiv' style='height:150px; width:240px; overflow:auto;' onscroll="scrollWithGrid() ">
+								<table class='fixed_table join_block relative_move' width='400'>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+									<tr>
+										<td class='centext_cell'>aaaaa</td>
+										<td class='centext_cell'>bbbbb</td>
+										<td class='centext_cell'>ccccc</td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+				
+			</td>
+		</tr>
+		<tr>
+			<td class='join_block panel_cell'>
+				<table class='fixed_table join_block relative_move' width='296'>
+					<tr>
+						<td class='centext_cell'>111111111111111111111111111111111111</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		
+	</table>
+</div>
+
+
+</body>
+</html>

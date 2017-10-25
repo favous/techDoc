@@ -1,0 +1,32 @@
+find命令
+
+grep命令
+
+1、tail -f filename
+说明：监视filename文件的尾部内容（默认10行，相当于增加参数 -n 10），刷新显示在屏幕上。退出，按下CTRL+C。
+
+2、tail -n 20 filename
+说明：显示filename最后20行。
+
+
+    -c 只输出匹配行的计数
+    -i 不区分大小写（用于单字符）
+    -n 显示匹配的行号
+
+grep -C 5 foo file 显示file文件里匹配foo字串那行以及上下5行
+grep -B 5 foo file 显示foo及前5行
+grep -A 5 foo file 显示foo及后5行
+grep ‘\<man’ * 匹配’manic’和’man’，但不是’Batman’，
+grep ‘\<man\>’ 只匹配’man’，而不是’Batman’或’manic’等其他的字符串。
+如果有很多 输出时，您可以通过管道将其转到’less’上阅读：
+grep magic /usr/src/Linux/Documentation/* | less
+pattern正则表达式主要参数：
+\： 忽略正则表达式中特殊字符的原有含义。
+^：匹配正则表达式的开始行。
+$: 匹配正则表达式的结束行。
+\<：从匹配正则表达 式的行开始。
+\>：到匹配正则表达式的行结束。
+[ ]：单个字符，如[A]即A符合要求 。
+[ - ]：范围，如[A-Z]，即A、B、C一直到Z都符合要求 。
+。：所有的单个字符。
+* ：有字符，长度可以为0。

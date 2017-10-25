@@ -1,0 +1,94 @@
+
+<script>
+var students = [ {
+	id : 1001,
+	name : "Byron",
+	age : 24
+}, {
+	id : 1002,
+	name : "Frank",
+	age : 30
+}, {
+	id : 1003,
+	name : "Aaron",
+	age : 24
+} ];
+
+function openDB(name, version) {
+	var version = version || 1;
+	var request = window.indexedDB.open(name, version);
+	request.onerror = function(e) {
+		console.log(e.currentTarget.error.message);
+	};
+	request.onsuccess = function(e) {
+		myDB.db = e.target.result;
+	};
+	request.onupgradeneeded = function(e) {
+		var db = e.target.result;
+		if (!db.objectStoreNames.contains('students')) {
+			var store = db.createObjectStore('students', {
+				keyPath : 'id'
+			});
+			store.createIndex('nameIndex', 'name', {
+				unique : true
+			});
+			store.createIndex('ageIndex', 'age', {
+				unique : false
+			});
+		}
+		console.log('DB version changed to ' + version);
+	};
+}
+
+var myDB = {
+	name : 'test',
+	version : 3,
+	db : null
+};
+
+function addData(db, storeName, students) {
+	var transaction = db.transaction(storeName, 'readwrite');
+	var store = transaction.objectStore(storeName);
+
+	for (var i = 0; i < students.length; i++) {
+		store.add(students[i]);
+	}
+}
+
+function getDataByIndex(db,storeName, key){
+	var transaction=db.transaction(storeName);
+	var store=transaction.objectStore(storeName);
+	var index = store.index("nameIndex");
+	index.get(key).onsuccess=function(e){
+		var student=e.target.result;
+		console.log('getDataByIndex==========');
+		console.log(student);
+	}
+}
+
+function fetchStoreByCursor(db,storeName){
+	var transaction=db.transaction(storeName);
+	var store=transaction.objectStore(storeName);
+	var request=store.openCursor();
+	request.onsuccess=function(e){
+		var cursor=e.target.result;
+		if(cursor){
+			console.log('cursor.key=' + cursor.key);			
+			var currentStudent = cursor.value;
+			console.log('cursor.value=====');
+			console.log(currentStudent);
+			cursor.continue();
+		}
+	};
+}
+
+openDB(myDB.name,myDB.version);
+
+setTimeout(function(){
+	addData(myDB.db, 'students', students);
+	getDataByIndex(myDB.db, 'students', 'Byron');
+	fetchStoreByCursor(myDB.db, 'students');
+},2000);
+
+		
+</script>
