@@ -1,0 +1,82 @@
+
+
+安装依赖
+##yum install gcc
+yum -y install gcc gcc-c++ autoconf automake make
+##yum install pcre-devel
+yum -y install pcre-devel
+#yum install zlib zlib-devel
+yum install -y zlib-devel
+#yum install openssl openssl-devel
+yum install -y openssl openssl-devel
+
+下载解压nginx的tar包
+mkdir /usr/nginx
+cd /usr/nginx/
+下载tar包
+wget http://nginx.org/download/nginx-1.14.0.tar.gz
+解压
+tar -xvf nginx-1.14.0.tar.gz
+
+安装
+生成 Makefile，为下一步的编译做准备
+cd nginx-1.14.0/
+./configure --prefix=/usr/nginx --sbin-path=/usr/nginx/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx/nginx.pid --lock-path=/var/lock/nginx.lock --user=nginx --group=nginx --with-http_ssl_module --with-http_flv_module --with-http_gzip_static_module --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/tem/nginx/client --http-proxy-temp-path=/var/tem/nginx/proxy --http-fastcgi-temp-path=/var/tem/nginx/fcgi --with-http_stub_status_module
+configure 后面参数如下：
+--prefix=/usr/nginx 
+--sbin-path=/usr/nginx/sbin/nginx 
+--conf-path=/etc/nginx/nginx.conf 
+--error-log-path=/var/log/nginx/error.log 
+--pid-path=/var/run/nginx/nginx.pid 
+--lock-path=/var/lock/nginx.lock 
+--user=nginx 
+--group=nginx 
+--with-http_ssl_module 
+--with-http_flv_module 
+--with-http_gzip_static_module 
+--http-log-path=/var/log/nginx/access.log 
+--http-client-body-temp-path=/var/tem/nginx/client 
+--http-proxy-temp-path=/var/tem/nginx/proxy 
+--http-fastcgi-temp-path=/var/tem/nginx/fcgi 
+--with-http_stub_status_module
+make
+安装
+安装失败
+yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5-devel libidn libidn-devel openssl openssl-devel nss_ldap openldap openldap-devel  openldap-clients openldap-servers libxslt-devel libevent-devel ntp  libtool-ltdl bison libtool vim-enhanced  
+make install
+
+useradd -s /sbin/nologin -M nginx
+id nginx
+
+查看所有端口状态
+firewall-cmd --zone=public --list-ports
+开启一个端口
+firewall-cmd --zone=public --add-port=8888/tcp --permanent
+重新载入
+firewall-cmd --reload
+
+
+netstat -ltunp
+kill -9 要杀掉的PID
+
+cd /usr/nginx/sbin/
+nginx		启动
+nginx -s stop	停止
+nginx -s quit	优雅停止
+
+资源目录权限
+chmod -R 755 /usr/resources/
+查询images权限
+getfacl images
+给目录下继承权限
+setfacl -d --set u:nginx:r-x /usr/resources/images/advImg
+
+解压到指定目录
+unzip -o -d /usr/nginx/gyumaru/games/35 /usr/nginx/gyumaru/games/crazybirds_jp.zip
+
+
+
+
+
+
+
